@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>D-Day Widget</title>
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+
+    <!-- Widget -->
+    <div class="widget" id="widget" style="display:none;">
+      <div class="content" id="w-content"></div>
+      <div class="dday" id="w-dday"></div>
+      <div class="date" id="w-date"></div>
+    </div>
+
+    <!-- Link generator -->
+    <div class="generator" id="generator" style="display:none;">
+      <h1>Link generator for Notion embed D-Day widget</h1>
+      <div class="desc">Input the content(your text) and the date, link will be generated below.</div>
+
+      <div class="field">
+        <label for="in-content">Content</label>
+        <input type="text" id="in-content" placeholder="Birthday">
+      </div>
+      <div class="field">
+        <label for="in-date">Date</label>
+        <input type="date" id="in-date">
+      </div>
+
+      <div class="preview">
+        <div class="content" id="p-content"></div>
+        <div class="dday" id="p-dday"></div>
+        <div class="date" id="p-date"></div>
+      </div>
+
+      <div class="field" style="margin-bottom:0;">
+        <label>Embed link</label>
+        <div class="result">
+          <input type="text" id="out-url" readonly>
+          <button id="copy-btn">Copy</button>
+        </div>
+      </div>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
