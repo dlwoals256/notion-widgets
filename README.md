@@ -1,9 +1,14 @@
 # notion-widgets
 A simple utilities for Notion widgets. Basically works on pure HTML + CSS + Vanilla JS
 
-# Usage
+# Links
+- [D-day calculator](https://dlwoals256.github.io/notion-widgets/dday/)
 
-1. Click the [link](about:blank)
+# Widget 1: D-day calculator
+
+## Usage
+
+1. Click the [link](https://dlwoals256.github.io/notion-widgets/dday/)
 2. Put the content(your text like Birthday) and the date.
 3. Copy the link by hitting Copy button or just drag it.
 4. Write a embed block in your notion page.
