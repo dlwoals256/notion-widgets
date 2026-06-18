@@ -120,3 +120,22 @@ if (dateParam) {
         setTimeout(() => { copyBtn.textContent = 'Copy'; }, 1500);
     });
 }
+
+// ── Auto-refresh in widget mode ──
+// Static host serves same file, so date is computed in browser at load.
+// Re-run calc so the number rolls over even if Notion tab stays open.
+if (dateParam) {
+    function renderWidget() {
+        const content = params.get('content') || 'D-Day';
+        const { label, dateText } = computeDday(content, dateParam);
+        document.getElementById('w-content').textContent = content;
+        document.getElementById('w-dday').textContent = label;
+        document.getElementById('w-date').textContent = dateText;
+    }
+
+    // Check every 30 minute, and re-check when the tab regains focus.
+    setInterval(renderWidget, 60 * 30 * 1000);
+    document.addEventListener('visibilitychange', () => {
+        if (!document.hidden) renderWidget();
+    });
+}
