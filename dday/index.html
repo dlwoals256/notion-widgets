@@ -28,8 +28,16 @@
         <label for="in-date">Date</label>
         <input type="date" id="in-date">
       </div>
+      <div class="field">
+        <label>Size</label>
+        <div class="size-select" id="size-select">
+          <button type="button" data-size="small" class="active">Small</button>
+          <button type="button" data-size="medium">Medium</button>
+          <button type="button" data-size="large">Large</button>
+        </div>
+      </div>
 
-      <div class="preview">
+      <div class="preview" id="preview">
         <div class="content" id="p-content"></div>
         <div class="dday" id="p-dday"></div>
         <div class="date" id="p-date"></div>

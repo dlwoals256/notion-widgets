@@ -32,16 +32,22 @@ body {
 }
 
 /* ── Main widget ── */
-.widget { text-align: center; padding: 16px 24px; }
+/* No --scale default here: the size class supplies it, so order never overrides the size class. */
+.widget { text-align: center; padding: calc(16px * var(--scale, 1)) calc(24px * var(--scale, 1)); }
 .widget .content {
-    font-size: 15px; font-weight: 500; color: var(--sub);
-    margin-bottom: 6px; letter-spacing: 0.01em; word-break: keep-all;
+    font-size: calc(15px * var(--scale, 1)); font-weight: 500; color: var(--sub);
+    margin-bottom: calc(6px * var(--scale, 1)); letter-spacing: 0.01em; word-break: keep-all;
 }
 .widget .dday {
-    font-size: 40px; font-weight: 700; color: var(--accent);
+    font-size: calc(40px * var(--scale, 1)); font-weight: 700; color: var(--accent);
     line-height: 1.1; letter-spacing: -0.02em;
 }
-.widget .date { font-size: 12px; color: var(--sub); margin-top: 8px; }
+.widget .date { font-size: calc(12px * var(--scale, 1)); color: var(--sub); margin-top: calc(8px * var(--scale, 1)); }
+
+/* ── Size variants (small = base) ── */
+.size-small  { --scale: 1; }
+.size-medium { --scale: 1.4; }
+.size-large  { --scale: 1.85; }
 
 /* ── Generator ── */
 .generator {
@@ -64,14 +70,35 @@ body {
 }
 .field input:focus { outline: none; border-color: var(--accent); }
 
+/* ── Size selector (segmented buttons) ── */
+.size-select { display: flex; gap: 6px; }
+.size-select button {
+    flex: 1; padding: 9px 0; font-size: 13px; font-weight: 600;
+    color: var(--sub); background: var(--field);
+    border: 1px solid var(--border); border-radius: 8px;
+    cursor: pointer; font-family: inherit;
+}
+.size-select button.active {
+    color: #fff; background: var(--accent); border-color: var(--accent);
+}
+
+/* ── Preview ── */
+/* Preview uses the same base sizes as the real widget, so it shows the actual result. */
+/* No --scale here: the size class supplies it, so it won't override the size class regardless of order. */
 .preview {
     background: var(--field); border: 1px solid var(--border);
     border-radius: 8px; padding: 18px; text-align: center;
     margin: 18px 0;
 }
-.preview .content { font-size: 13px; color: var(--sub); margin-bottom: 4px; word-break: keep-all; }
-.preview .dday { font-size: 30px; font-weight: 700; color: var(--accent); line-height: 1.1; }
-.preview .date { font-size: 11px; color: var(--sub); margin-top: 6px; }
+.preview .content {
+    font-size: calc(15px * var(--scale, 1)); font-weight: 500; color: var(--sub);
+    margin-bottom: calc(6px * var(--scale, 1)); letter-spacing: 0.01em; word-break: keep-all;
+}
+.preview .dday {
+    font-size: calc(40px * var(--scale, 1)); font-weight: 700; color: var(--accent);
+    line-height: 1.1; letter-spacing: -0.02em;
+}
+.preview .date { font-size: calc(12px * var(--scale, 1)); color: var(--sub); margin-top: calc(8px * var(--scale, 1)); }
 
 .result {
     display: flex; gap: 8px; align-items: stretch;

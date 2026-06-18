@@ -30,14 +30,24 @@ function computeDday(content, dateStr) {
     return { label, dateText };
 }
 
+// Allowed sizes; anything else falls back to 'small'.
+const SIZES = ['small', 'medium', 'large'];
+function normalizeSize(s) {
+    return SIZES.includes(s) ? s : 'small';
+}
+
 const params = new URLSearchParams(location.search);
 const dateParam = params.get('date');
 
 if (dateParam) {
     // ── Widget mode ──
-    document.getElementById('widget').style.display = 'block';
+    const widget = document.getElementById('widget');
+    widget.style.display = 'block';
 
     const content = params.get('content') || 'D-Day';
+    const size = normalizeSize(params.get('size'));
+    widget.classList.add('size-' + size);
+
     const { label, dateText } = computeDday(content, dateParam);
 
     document.getElementById('w-content').textContent = content;
@@ -50,10 +60,14 @@ if (dateParam) {
     const inContent = document.getElementById('in-content');
     const inDate = document.getElementById('in-date');
     const outUrl = document.getElementById('out-url');
+    const preview = document.getElementById('preview');
+    const sizeSelect = document.getElementById('size-select');
+
+    let selectedSize = 'small';
 
     // Default: today
     const t = new Date();
-    
+
     inDate.value = t.getFullYear() + '-' +
         String(t.getMonth() + 1).padStart(2, '0') + '-' +
         String(t.getDate()).padStart(2, '0');
@@ -63,19 +77,33 @@ if (dateParam) {
         // Right below line make 2026-07-05 to 20260705
         const dateStr = inDate.value.replaceAll('-', '');
 
-        // Preview
+        // Preview (apply size to the preview box too)
         const { label, dateText } = computeDday(content, dateStr);
         document.getElementById('p-content').textContent = content;
         document.getElementById('p-dday').textContent = label;
         document.getElementById('p-date').textContent = dateText;
+        preview.classList.remove('size-small', 'size-medium', 'size-large');
+        preview.classList.add('size-' + selectedSize);
 
         // Generate link (based on current page)
         const base = location.origin + location.pathname;
-        outUrl.value = base + '?content=' + encodeURIComponent(content) + '&date=' + dateStr;
+        outUrl.value = base + '?content=' + encodeURIComponent(content) +
+            '&date=' + dateStr + '&size=' + selectedSize;
     }
 
     inContent.addEventListener('input', refresh);
     inDate.addEventListener('input', refresh);
+
+    // Size buttons
+    sizeSelect.addEventListener('click', (e) => {
+        const btn = e.target.closest('button[data-size]');
+        if (!btn) return;
+        selectedSize = btn.dataset.size;
+        sizeSelect.querySelectorAll('button').forEach(b =>
+            b.classList.toggle('active', b === btn));
+        refresh();
+    });
+
     refresh();
 
     // Copy button
